@@ -1,8 +1,6 @@
-import React from 'react';
+'use client';
 
-export function TabContent({ children }: { children: React.ReactNode }) {
-  return <div className="bg-white rounded-lg shadow">{children}</div>;
-}
+import React from 'react';
 
 interface Tab {
   id: string;
@@ -16,7 +14,7 @@ interface TabsProps {
   onTabChange: (tabId: string) => void;
 }
 
-export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
+export const Tabs: React.FC<TabsProps> = ({ tabs, activeTab, onTabChange }) => {
   return (
     <div className="border-b border-gray-200">
       <div className="flex gap-8">
@@ -24,19 +22,31 @@ export function Tabs({ tabs, activeTab, onTabChange }: TabsProps) {
           <button
             key={tab.id}
             onClick={() => onTabChange(tab.id)}
-            className={`py-4 px-1 border-b-2 font-medium text-sm transition ${
+            className={`py-4 px-2 font-medium border-b-2 transition-colors ${
               activeTab === tab.id
                 ? 'border-indigo-600 text-indigo-600'
-                : 'border-transparent text-gray-600 hover:text-gray-900 hover:border-gray-300'
+                : 'border-transparent text-gray-600 hover:text-gray-900'
             }`}
           >
-            <div className="flex items-center gap-2">
+            <span className="flex items-center gap-2">
               {tab.icon}
               {tab.label}
-            </div>
+            </span>
           </button>
         ))}
       </div>
     </div>
   );
+};
+
+interface TabContentProps {
+  children: React.ReactNode;
 }
+
+export const TabContent: React.FC<TabContentProps> = ({ children }) => {
+  return (
+    <div className="bg-white rounded-lg border border-gray-200 shadow-sm">
+      {children}
+    </div>
+  );
+};
